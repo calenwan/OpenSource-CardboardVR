@@ -5,7 +5,7 @@ Citation:
 
 Use unofficial Google Cardboard SDK (mobfish GmbH) : https://github.com/mobfishgmbh/Cardboard-VR-Unity-SDK/releases/tag/1.0
 
-Tracked Images:
+Tracked Images: (You can use your own images, but please make sure they have enough features to track)
 1. ARTrackedImage
 2. https://www.google.com/imgres?imgurl=https%3A%2F%2Fwww.researchgate.net%2Fprofile%2FMarko_Teittinen%2Fpublication%2F243782501%2Ffigure%2Ffig3%2FAS%3A669412159942656%401536611704049%2FExample-definition-of-FreeArea-and-ActiveArea-for-horizontal-slider_Q320.jpg&imgrefurl=https%3A%2F%2Fwww.researchgate.net%2Ffigure%2FExample-definition-of-FreeArea-and-ActiveArea-for-horizontal-slider_fig3_243782501&tbnid=zWyRoVI-DCoD2M&vet=12ahUKEwjw4dmxjaTtAhUukJ4KHZ3XA-cQMygjegUIARDhAQ..i&docid=wXUI-_oyJ0YV-M&w=320&h=320&q=horizontal&hl=en&ved=2ahUKEwjw4dmxjaTtAhUukJ4KHZ3XA-cQMygjegUIARDhAQ
 3. https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.homedepot-static.com%2FproductImages%2Fb4fe36f2-04d2-4aa8-931b-287107ed517f%2Fsvn%2Feinhell-laser-level-2270107-66_600.jpg&imgrefurl=https%3A%2F%2Fwww.homedepot.com%2Fp%2FEinhell-Self-Leveling-Red-Beam-Horizontal-and-Vertical-Cross-Line-Laser-Level-30-Ft-Range-Class-II-2270107%2F312511306&tbnid=v5fa7iuLgmPNkM&vet=12ahUKEwjw4dmxjaTtAhUukJ4KHZ3XA-cQMygJegUIARCjAQ..i&docid=Fc_q3rgujj7IAM&w=600&h=600&q=horizontal&hl=en&ved=2ahUKEwjw4dmxjaTtAhUukJ4KHZ3XA-cQMygJegUIARCjAQ

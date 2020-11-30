@@ -3,7 +3,7 @@ This is the repo for final project OpenSource CardboardVR using Unity and ARFoun
 
 Citation:
 
-Use unofficial Google Cardboard SDK (mobfish GmbH) : https://github.com/mobfishgmbh/Cardboard-VR-Unity-SDK
+Use unofficial Google Cardboard SDK (mobfish GmbH) : https://github.com/mobfishgmbh/Cardboard-VR-Unity-SDK/releases/tag/1.0
 
 Tracked Images:
 1. ARTrackedImage

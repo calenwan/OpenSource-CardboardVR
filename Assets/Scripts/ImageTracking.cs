@@ -13,7 +13,7 @@ public class ImageTracking : MonoBehaviour
     private int numOfImagesEachHand = 3; // number of images for each hand
     private float rotateDegree; // for images on each hand, we will set different initial degrees
     [SerializeField]
-    private int continueFrames = 30; // set number of frames to continue moving after image becomes invisble
+    private int continueFrames = 60; // set number of frames to continue moving after image becomes invisble
     private int averageWindowSize = 60; // window size to average the velocity
     [SerializeField]
     private GameObject[] placeablePrefabs; // prefabs to place - in our case we use 2 (two hands)
@@ -24,13 +24,17 @@ public class ImageTracking : MonoBehaviour
     private int numHands = 2;
     // number of frames left to render
     private int[] contFrames;
-    // for rotation moving
-    private Vector3[] lastRotation;
-    private Vector3[] previousVelocities;
-    private Vector3[] lastVelocity;
+    // flag and index
     private bool[] validTracking;
     private int[] counter;
-    
+    // for position moving
+    private Vector3[] lastPosition;
+    private Vector3[] previousPVelocities;
+    private Vector3[] avgPVelocity;
+    // for rotation moving
+    private Vector3[] lastRotation;
+    private Vector3[] previousRVelocities;
+    private Vector3[] avgRVelocity;
     
     private void Awake()
     {
@@ -49,19 +53,27 @@ public class ImageTracking : MonoBehaviour
         rotateDegree = 360 / numOfImagesEachHand;
 
         contFrames = new int[numHands];
-        lastVelocity = new Vector3[numHands];
-        lastRotation = new Vector3[numHands];
         validTracking = new bool[numHands];
         counter = new int[numHands];
+        
+        lastPosition = new Vector3[numHands];
+        avgPVelocity = new Vector3[numHands];
+        lastRotation = new Vector3[numHands];
+        avgRVelocity = new Vector3[numHands];
+        previousPVelocities = new Vector3[numHands*averageWindowSize];
+        previousRVelocities = new Vector3[numHands*averageWindowSize];
+
         for (int i = 0; i < numHands; ++i)
         {
             contFrames[i] = 0;
-            lastVelocity[i] = Vector3.zero;
-            lastRotation[i] = Vector3.zero;
             validTracking[i] = false;
             counter[i] = 0;
+            
+            lastPosition[i] = Vector3.zero;
+            avgPVelocity[i] = Vector3.zero;
+            lastRotation[i] = Vector3.zero;
+            avgRVelocity[i] = Vector3.zero;
         }
-        previousVelocities = new Vector3[numHands*averageWindowSize];
     }
     
     private void OnEnable()
@@ -121,14 +133,17 @@ public class ImageTracking : MonoBehaviour
             prefab.transform.Rotate(xrot, 0.0f, 0.0f, Space.Self);
             
             // store previous velocities
-            previousVelocities[handNum*averageWindowSize+counter[handNum]] = prefab.transform.rotation.eulerAngles - lastRotation[handNum];
+            previousPVelocities[handNum*averageWindowSize+counter[handNum]] = prefab.transform.rotation.eulerAngles - lastPosition[handNum];
+            previousRVelocities[handNum*averageWindowSize+counter[handNum]] = prefab.transform.rotation.eulerAngles - lastRotation[handNum];
             counter[handNum]++;
             if (counter[handNum] >= averageWindowSize) {
                 //valid velocity
                 validTracking[handNum] = true;
                 counter[handNum] = 0;
             }
+            lastPosition[handNum] = prefab.transform.position;
             lastRotation[handNum] = prefab.transform.rotation.eulerAngles;
+            
             prefab.SetActive(true);
         }
         else if (trackedImage.trackingState == TrackingState.Limited) // image become invisble, set contFrame value to continue doing motion for several frames
@@ -136,18 +151,22 @@ public class ImageTracking : MonoBehaviour
             // calculate velocity based on the next image initial degree and current rotation degree
             if (validTracking[handNum]) {
                 // get average velocity
-                lastVelocity[handNum] = previousVelocities[handNum*averageWindowSize];
+                avgPVelocity[handNum] = previousPVelocities[handNum*averageWindowSize];
+                avgRVelocity[handNum] = previousRVelocities[handNum*averageWindowSize];
                 for (int i = 1; i < averageWindowSize; i++)
                 {
-                    lastVelocity[handNum] += previousVelocities[handNum*averageWindowSize+i];
+                    avgPVelocity[handNum] += previousPVelocities[handNum*averageWindowSize+i];
+                    avgRVelocity[handNum] += previousRVelocities[handNum*averageWindowSize+i];
                 }
-                Vector3 temp = lastVelocity[handNum];
+                
                 float val = (float)1.0/averageWindowSize;
-                lastVelocity[handNum] = Vector3.Scale(temp, new Vector3(val, 0f, 0f));
-                lastVelocity[handNum].x = lastVelocity[handNum].x % 5.0f;
+                avgPVelocity[handNum] = Vector3.Scale(avgPVelocity[handNum], new Vector3(val, val, val));
+                avgRVelocity[handNum] = Vector3.Scale(avgRVelocity[handNum], new Vector3(val, 0f, 0f));
+                avgRVelocity[handNum].x = avgRVelocity[handNum].x % 5.0f;
             } else {
                 // no velocity
-                lastVelocity[handNum] = Vector3.zero;
+                avgPVelocity[handNum] = Vector3.zero;
+                avgRVelocity[handNum] = Vector3.zero;
             }
             // clear validtracking flag
             validTracking[handNum] = false;
@@ -168,17 +187,17 @@ public class ImageTracking : MonoBehaviour
                 if (contFrames[i] == 1)
                 {
                     prefab.SetActive(false);
-                    contFrames[i]--;
                 }
                 else
                 {
                     // use the velocity to render objects
+                    // prefab.transform.position += avgPVelocity[i];
                     Quaternion currRotation = prefab.transform.rotation;
-                    currRotation.eulerAngles += lastVelocity[i];
+                    currRotation.eulerAngles += avgRVelocity[i];
                     prefab.transform.rotation = currRotation;
                     prefab.SetActive(true);
-                    contFrames[i]--;
                 }
+                contFrames[i]--;
             } 
         }
     }

@@ -8,13 +8,16 @@ using UnityEngine.XR.ARSubsystems;
 public class ImageTracking : MonoBehaviour
 {
     [SerializeField]
-    private int wandLength = 10; // the wand length on each hand
+    private int cubeLength = 10; // the wand length on each hand
     [SerializeField]
-    private int numOfImagesEachHand = 3; // number of images for each hand
+    private int cubeWidth = 10; // the wand length on each hand
+    [SerializeField]
+    private int cubeHeight = 10; // the wand length on each hand
+    private int numOfImagesEachHand = 6; // number of images for each hand, a 6-face cube
     private float rotateDegree; // for images on each hand, we will set different initial degrees
     [SerializeField]
     private int continueFrames = 60; // set number of frames to continue moving after image becomes invisble
-    private int averageWindowSize = 60; // window size to average the velocity
+    private int averageWindowSize = 30; // window size to average the velocity
     [SerializeField]
     private GameObject[] placeablePrefabs; // prefabs to place - in our case we use 2 (two hands)
     private Dictionary<string, GameObject> spawnedPrefabs = new Dictionary<string, GameObject>(); // for each hand (prefab), store states
@@ -50,7 +53,7 @@ public class ImageTracking : MonoBehaviour
             }
             j++;
         }
-        rotateDegree = 360 / numOfImagesEachHand;
+        rotateDegree = 360 / (numOfImagesEachHand-2); // rotate along with x-axis or z-axis
 
         contFrames = new int[numHands];
         validTracking = new bool[numHands];
@@ -117,20 +120,57 @@ public class ImageTracking : MonoBehaviour
             contFrames[handNum] = 0;
             
             int imgNumOnHand = int.Parse(name, 0) % numOfImagesEachHand;
-            float xrot = imgNumOnHand * rotateDegree;
-
-            GameObject prefab = spawnedPrefabs[name];
+            float trot = imgNumOnHand * rotateDegree;
             
-            float handPosition = (float)(wandLength/100);
-            if (handNum == 0) {
-                handPosition *= -1;
+            if (imgNumOnHand == numOfImagesEachHand-2) {
+                // if 5th image, rotate 3 rotateDegree
+                trot = 3 * rotateDegree;
+            } else if (imgNumOnHand == numOfImagesEachHand-1) {
+                // if 6th image, rotate 1 rotateDegree
+                trot = rotateDegree;
+            }
+
+            Vector3 offset = new Vector3(0f, 0f, 0f);
+            if (imgNumOnHand == 1) {
+                // 2nd image
+                offset = new Vector3((float)cubeWidth/(-100), 0f, (float)cubeLength/100);
+            } else if (imgNumOnHand == 2) {
+                // 3rd image
+                offset = new Vector3(0f, 0f, (float)cubeWidth/100);
+            } else if (imgNumOnHand == 3) {
+                // 4th image
+                offset = new Vector3((float)cubeWidth/100, 0f, (float)cubeLength/100);
+            } else if (imgNumOnHand == 4) {
+                // 5th image
+                offset = new Vector3(0f, (float)cubeWidth/(-100), (float)cubeHeight/200);
+            } else if (imgNumOnHand == 2) {
+                // 6th image
+                offset = new Vector3(0f, (float)cubeWidth/100, (float)cubeHeight/200);
             }
             
+            /**
+            float handPosition = (float)cubeWidth/100;
+            if (imgNumOnHand == 1 || imgNumOnHand == 3) {
+                // if 2nd and 4th images, use cubeLength
+                handPosition = (float)cubeLength/100;
+            } else if (imgNumOnHand == 4 || imgNumOnHand == 5) {
+                // if 5th and 6th images, use cubeHeight
+                handPosition = (float)cubeHeight/100;
+            }
+            **/
+            
+            GameObject prefab = spawnedPrefabs[name];
+
             // get hand position
-            prefab.transform.position = trackedImage.transform.position + new Vector3(handPosition, 0f, 0f);
+            prefab.transform.position = trackedImage.transform.position + offset;
             // get hand rotation
             prefab.transform.rotation = trackedImage.transform.rotation;
-            prefab.transform.Rotate(xrot, 0.0f, 0.0f, Space.Self);
+            // get hand rotation, along z-axis for first 4 images, and along x-axis for rest 2 images
+            if (imgNumOnHand < numOfImagesEachHand-2) {
+                prefab.transform.Rotate(0.0f, 0.0f, trot, Space.Self);
+            } else {
+                prefab.transform.Rotate(trot, 0.0f, 0.0f, Space.Self);
+            }
             
             // store previous velocities
             previousPVelocities[handNum*averageWindowSize+counter[handNum]] = prefab.transform.rotation.eulerAngles - lastPosition[handNum];
@@ -161,8 +201,16 @@ public class ImageTracking : MonoBehaviour
                 
                 float val = (float)1.0/averageWindowSize;
                 avgPVelocity[handNum] = Vector3.Scale(avgPVelocity[handNum], new Vector3(val, val, val));
-                avgRVelocity[handNum] = Vector3.Scale(avgRVelocity[handNum], new Vector3(val, 0f, 0f));
-                avgRVelocity[handNum].x = avgRVelocity[handNum].x % 5.0f;
+                // check to see the object rotate along with which axis
+                if (Mathf.Abs(avgPVelocity[handNum].x) > Mathf.Abs(avgPVelocity[handNum].z)){
+                    // along x axis
+                    avgRVelocity[handNum] = Vector3.Scale(avgRVelocity[handNum], new Vector3(val, 0f, 0f));
+                    // avgRVelocity[handNum].x = avgRVelocity[handNum].x % 5.0f;
+                } else {
+                    // along z axis
+                    avgRVelocity[handNum] = Vector3.Scale(avgRVelocity[handNum], new Vector3(0f, 0f, val));
+                    // avgRVelocity[handNum].z = avgRVelocity[handNum].z % 5.0f;
+                }
             } else {
                 // no velocity
                 avgPVelocity[handNum] = Vector3.zero;

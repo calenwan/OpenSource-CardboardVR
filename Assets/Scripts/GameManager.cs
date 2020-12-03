@@ -5,7 +5,7 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
 [RequireComponent(typeof(ARTrackedImageManager))]
-public class ImageTracking : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private int cubeLength = 10; // the wand length on each hand
@@ -17,7 +17,7 @@ public class ImageTracking : MonoBehaviour
     private float rotateDegree; // for images on each hand, we will set different initial degrees
     [SerializeField]
     private int continueFrames = 60; // set number of frames to continue moving after image becomes invisble
-    private int averageWindowSize = 30; // window size to average the velocity
+    private int averageWindowSize = 15; // window size to average the velocity
     [SerializeField]
     private GameObject[] placeablePrefabs; // prefabs to place - in our case we use 2 (two hands)
     private Dictionary<string, GameObject> spawnedPrefabs = new Dictionary<string, GameObject>(); // for each hand (prefab), store states
@@ -28,6 +28,7 @@ public class ImageTracking : MonoBehaviour
     // number of frames left to render
     private int[] contFrames;
     // flag and index
+    private bool[] isTracking;
     private bool[] validTracking;
     private int[] counter;
     // for position moving
@@ -38,6 +39,16 @@ public class ImageTracking : MonoBehaviour
     private Vector3[] lastRotation;
     private Vector3[] previousRVelocities;
     private Vector3[] avgRVelocity;
+
+    // for line renderer
+    public GameObject linePrefab;
+
+    private GameObject[] currentLine;
+    private List<GameObject>[] lines;
+    private List<Vector3>[] drawPositions;
+    
+    public bool leftHoldKey;
+    private bool rightHoldKey;
     
     private void Awake()
     {
@@ -56,6 +67,7 @@ public class ImageTracking : MonoBehaviour
         rotateDegree = 360 / (numOfImagesEachHand-2); // rotate along with x-axis or z-axis
 
         contFrames = new int[numHands];
+        isTracking = new bool[numHands];
         validTracking = new bool[numHands];
         counter = new int[numHands];
         
@@ -66,9 +78,15 @@ public class ImageTracking : MonoBehaviour
         previousPVelocities = new Vector3[numHands*averageWindowSize];
         previousRVelocities = new Vector3[numHands*averageWindowSize];
 
+        // init line renderer
+        currentLine = new GameObject[numHands];
+        lines = new List<GameObject>[numHands];
+        drawPositions = new List<Vector3>[numHands];
+
         for (int i = 0; i < numHands; ++i)
         {
             contFrames[i] = 0;
+            isTracking[i] = false;
             validTracking[i] = false;
             counter[i] = 0;
             
@@ -76,7 +94,13 @@ public class ImageTracking : MonoBehaviour
             avgPVelocity[i] = Vector3.zero;
             lastRotation[i] = Vector3.zero;
             avgRVelocity[i] = Vector3.zero;
+
+            lines[i] = new List<GameObject>();
+            drawPositions[i] = new List<Vector3>();
         }
+        
+        leftHoldKey = false;
+        rightHoldKey = false;
     }
     
     private void OnEnable()
@@ -118,6 +142,7 @@ public class ImageTracking : MonoBehaviour
         {
             // reset contframes
             contFrames[handNum] = 0;
+            isTracking[handNum] = true;
             
             int imgNumOnHand = int.Parse(name, 0) % numOfImagesEachHand;
             float trot = imgNumOnHand * rotateDegree;
@@ -188,6 +213,7 @@ public class ImageTracking : MonoBehaviour
         }
         else if (trackedImage.trackingState == TrackingState.Limited) // image become invisble, set contFrame value to continue doing motion for several frames
         {
+            isTracking[handNum] = false;
             // calculate velocity based on the next image initial degree and current rotation degree
             if (validTracking[handNum]) {
                 // get average velocity
@@ -211,21 +237,52 @@ public class ImageTracking : MonoBehaviour
                     avgRVelocity[handNum] = Vector3.Scale(avgRVelocity[handNum], new Vector3(0f, 0f, val));
                     // avgRVelocity[handNum].z = avgRVelocity[handNum].z % 5.0f;
                 }
+                contFrames[handNum] = continueFrames;
             } else {
                 // no velocity
                 avgPVelocity[handNum] = Vector3.zero;
                 avgRVelocity[handNum] = Vector3.zero;
+                contFrames[handNum] = counter[handNum];
             }
             // clear validtracking flag
             validTracking[handNum] = false;
             counter[handNum] = 0;
-            contFrames[handNum] = continueFrames;
         }
     }
 
     // check each contFrame; if > 0, render the rotations for several more frames
+    // and also check input buttons; if input signal, draw lines
     void Update()
     {
+        // debug
+        /** you can use the below code block to test and get the key mapping
+         for your own bluetooth controller
+        foreach (KeyCode kcode in System.Enum.GetValues(typeof(KeyCode)))
+        {
+            if (Input.GetKeyDown(kcode))
+            {
+                print("KeyCode down: " + kcode);
+            }
+        }
+        **/
+        
+        /**
+        Key mapping for blueTooth Controller used in our demo:
+        joystick        keycode           keycode
+        Button           Press            Release
+          A                L                 V
+          B                K                 P
+          X                Y                 T
+          Y                U                 F
+          OK           Alpha1 & H        Alpha2 & R
+          UP           W & UpArrow           E
+         DOWN          X & DownArrow         Z
+         LEFT          A & LeftArrow         Q
+         RIGHT         D & RightArrow        C
+        
+        We use A and B for left controller, and X and Y for right controller in our demo.
+        **/
+        
         for (int i = 0; i < numHands; i++)
         {   
             if (contFrames[i] > 0)
@@ -246,7 +303,112 @@ public class ImageTracking : MonoBehaviour
                     prefab.SetActive(true);
                 }
                 contFrames[i]--;
-            } 
+            } else {
+                // disable prefab
+                if (isTracking[i] == false) {
+                    GameObject prefab = spawnedPrefabs[(i * numOfImagesEachHand).ToString()];
+                    prefab.SetActive(false);
+                }
+            }
+        }
+
+        // left controller buttons
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            // press button A, draw lines with left controller
+            GameObject prefab = spawnedPrefabs["0"];
+            if (prefab.activeSelf)
+            {
+                leftHoldKey = true;
+                CreateLine(prefab, 0);
+            }
+        }
+        if (Input.GetKey(KeyCode.L))
+        {
+            // hold button A, continue drawing with left controller
+            GameObject prefab = spawnedPrefabs["0"];
+            if (prefab.activeSelf && leftHoldKey)
+            { 
+                UpdateLine(prefab, 0);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            // release button A. This will happen earlier than GetKeyUp(KeyCode.L)
+            leftHoldKey = false;
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            // button B, remove last line drew by left controller
+            RemoveLine(0);
+        }
+
+        // right controller buttons
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            // button X, draw lines with right controller
+            GameObject prefab = spawnedPrefabs[numOfImagesEachHand.ToString()];
+            if (prefab.activeSelf)
+            {
+                rightHoldKey = true;
+                CreateLine(prefab, 1);
+            }
+        }
+        if (Input.GetKey(KeyCode.Y))
+        {
+            // holding button X, continue drawing with right controller
+            GameObject prefab = spawnedPrefabs[numOfImagesEachHand.ToString()];
+            if (prefab.activeSelf && rightHoldKey)
+            {
+                UpdateLine(prefab, 1);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            // release button X. This will happen earlier than GetKeyUp(KeyCode.Y)
+            rightHoldKey = false;
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            // button Y, remove last line drew by right controller
+            RemoveLine(1);
+        }
+    }
+
+
+    void CreateLine(GameObject prefab, int num)
+    { 
+        currentLine[num] = Instantiate(linePrefab, Vector3.zero, Quaternion.identity);
+        lines[num].Add(currentLine[num]);
+        LineRenderer lineRenderer = currentLine[num].GetComponent<LineRenderer>();
+        lineRenderer.material.color = Color.blue;
+        if (num == 1)
+        {
+            lineRenderer.material.color = Color.red;
+        }
+        drawPositions[num].Clear();
+        drawPositions[num].Add(prefab.transform.GetChild(0).position);
+        drawPositions[num].Add(prefab.transform.GetChild(0).position);
+        lineRenderer.SetPosition(0, drawPositions[num][0]);
+        lineRenderer.SetPosition(1, drawPositions[num][1]);
+    }
+
+    void UpdateLine(GameObject prefab, int num)
+    {
+        Vector3 newPosition = prefab.transform.GetChild(0).position;
+        drawPositions[num].Add(newPosition);
+        LineRenderer lineRenderer = currentLine[num].GetComponent<LineRenderer>();
+        lineRenderer.positionCount++;
+        lineRenderer.SetPosition(lineRenderer.positionCount-1, newPosition);
+    }
+
+    void RemoveLine(int num)
+    {
+        if (lines[num].Count > 0)
+        {
+            GameObject last = lines[num][lines[num].Count - 1];
+            Destroy(last);
+            lines[num].RemoveAt(lines[num].Count - 1);
         }
     }
 }

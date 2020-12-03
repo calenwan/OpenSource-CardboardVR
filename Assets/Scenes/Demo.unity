@@ -307,6 +307,9 @@ MonoBehaviour:
   placeablePrefabs:
   - {fileID: 552238246965888665, guid: 056113e80282d4574934fe925ba28170, type: 3}
   - {fileID: 8660958508913182626, guid: 396667f65eb574b9c8fdbd04f78b149f, type: 3}
+  linePrefab: {fileID: 1427655008374452869, guid: a309e2eb482204e7093e1ce8d476a03e,
+    type: 3}
+  leftHoldKey: 0
 --- !u!114 &165585590
 MonoBehaviour:
   m_ObjectHideFlags: 0

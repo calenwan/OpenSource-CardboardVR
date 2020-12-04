@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
 
     // store previous two images info for both hands
     private int numHands = 2;
+    private int numButtons = 4;
     // number of frames left to render
     private int[] contFrames;
     // flag and index
@@ -40,16 +41,12 @@ public class GameManager : MonoBehaviour
     private Vector3[] previousRVelocities;
     private Vector3[] avgRVelocity;
 
-    // for line renderer
-    public GameObject linePrefab;
+    // for buttons
+    private string[] leftButtonInfo;
+    private string[] rightButtonInfo;
+    private bool[] leftButtonSwitch;
+    private bool[] rightButtonSwitch;
 
-    private GameObject[] currentLine;
-    private List<GameObject>[] lines;
-    private List<Vector3>[] drawPositions;
-    
-    public bool leftHoldKey;
-    private bool rightHoldKey;
-    
     private void Awake()
     {
         trackedImageManager = FindObjectOfType<ARTrackedImageManager>();
@@ -78,11 +75,6 @@ public class GameManager : MonoBehaviour
         previousPVelocities = new Vector3[numHands*averageWindowSize];
         previousRVelocities = new Vector3[numHands*averageWindowSize];
 
-        // init line renderer
-        currentLine = new GameObject[numHands];
-        lines = new List<GameObject>[numHands];
-        drawPositions = new List<Vector3>[numHands];
-
         for (int i = 0; i < numHands; ++i)
         {
             contFrames[i] = 0;
@@ -94,13 +86,20 @@ public class GameManager : MonoBehaviour
             avgPVelocity[i] = Vector3.zero;
             lastRotation[i] = Vector3.zero;
             avgRVelocity[i] = Vector3.zero;
-
-            lines[i] = new List<GameObject>();
-            drawPositions[i] = new List<Vector3>();
         }
-        
-        leftHoldKey = false;
-        rightHoldKey = false;
+
+        // init button info for current controller
+        leftButtonSwitch = new bool[numButtons];
+        rightButtonSwitch = new bool[numButtons];
+        leftButtonInfo = new string[numButtons];
+        rightButtonInfo = new string[numButtons];
+        for (int i = 0; i < numButtons; i++)
+        {
+            leftButtonSwitch[i] = false;
+            rightButtonSwitch[i] = false;
+            leftButtonInfo[i] = "F";
+            rightButtonInfo[i] = "F";
+        }
     }
     
     private void OnEnable()
@@ -251,38 +250,8 @@ public class GameManager : MonoBehaviour
     }
 
     // check each contFrame; if > 0, render the rotations for several more frames
-    // and also check input buttons; if input signal, draw lines
     void Update()
     {
-        // debug
-        /** you can use the below code block to test and get the key mapping
-         for your own bluetooth controller
-        foreach (KeyCode kcode in System.Enum.GetValues(typeof(KeyCode)))
-        {
-            if (Input.GetKeyDown(kcode))
-            {
-                print("KeyCode down: " + kcode);
-            }
-        }
-        **/
-        
-        /**
-        Key mapping for blueTooth Controller used in our demo:
-        joystick        keycode           keycode
-        Button           Press            Release
-          A                L                 V
-          B                K                 P
-          X                Y                 T
-          Y                U                 F
-          OK           Alpha1 & H        Alpha2 & R
-          UP           W & UpArrow           E
-         DOWN          X & DownArrow         Z
-         LEFT          A & LeftArrow         Q
-         RIGHT         D & RightArrow        C
-        
-        We use A and B for left controller, and X and Y for right controller in our demo.
-        **/
-        
         for (int i = 0; i < numHands; i++)
         {   
             if (contFrames[i] > 0)
@@ -312,103 +281,406 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // left controller buttons
+        // debug
+        /** you can use the below code block to test and get the key mapping
+         for your own bluetooth controller
+        foreach (KeyCode kcode in System.Enum.GetValues(typeof(KeyCode)))
+        {
+            if (Input.GetKeyDown(kcode))
+            {
+                print("KeyCode down: " + kcode);
+            }
+        }
+        **/
+
+        /**
+        Key mapping for blueTooth Controller used in our demo:
+        joystick        keycode           keycode
+        Button           Press            Release
+          A                L                 V
+          B                K                 P
+          X                Y                 T
+          Y                U                 F
+          OK           Alpha1 & H        Alpha2 & R
+          UP           W & UpArrow           E
+         DOWN          X & DownArrow         Z
+         LEFT          A & LeftArrow         Q
+         RIGHT         D & RightArrow        C
+        **/
+        // For the controller, we will store the information of button status as a string
+        // for left hand, we allow A,B,UP,DOWN 
+        // for right hand, we allow X,Y,LEFT,RIGHT
+        // we will not use OK button for now
+        // status T(press)H(hold)F(release)
+
+        SetInputButtons();
+    }
+
+    void SetInputButtons()
+    {
         if (Input.GetKeyDown(KeyCode.L))
         {
-            // press button A, draw lines with left controller
-            GameObject prefab = spawnedPrefabs["0"];
-            if (prefab.activeSelf)
+            // press button A
+            if (IsLeftActive())
             {
-                leftHoldKey = true;
-                CreateLine(prefab, 0);
+                leftButtonSwitch[0] = true;
+                leftButtonInfo[0] = "T";
+            } 
+        }
+        if (Input.GetKey(KeyCode.L) && leftButtonSwitch[0])
+        {
+            // hold button A
+            if (IsLeftActive())
+            {
+                leftButtonInfo[0] = "H";
             }
         }
-        if (Input.GetKey(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.V) || Input.GetKeyUp(KeyCode.L))
         {
-            // hold button A, continue drawing with left controller
-            GameObject prefab = spawnedPrefabs["0"];
-            if (prefab.activeSelf && leftHoldKey)
-            { 
-                UpdateLine(prefab, 0);
+            // release button A
+            if (IsLeftActive())
+            {
+                leftButtonSwitch[0] = false;
+                leftButtonInfo[0] = "F";
             }
         }
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            // release button A. This will happen earlier than GetKeyUp(KeyCode.L)
-            leftHoldKey = false;
-        }
+
         if (Input.GetKeyDown(KeyCode.K))
         {
-            // button B, remove last line drew by left controller
-            RemoveLine(0);
+            // press button B
+            if (IsLeftActive())
+            {
+                leftButtonSwitch[1] = true;
+                leftButtonInfo[1] = "T";
+            }
+        }
+        if (Input.GetKey(KeyCode.K) && leftButtonSwitch[1])
+        {
+            // hold button B
+            if (IsLeftActive())
+            {
+                leftButtonInfo[1] = "H";
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyUp(KeyCode.K))
+        {
+            // release button B
+            if (IsLeftActive())
+            {
+                leftButtonSwitch[1] = false;
+                leftButtonInfo[1] = "F";
+            }
         }
 
-        // right controller buttons
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            // button X, draw lines with right controller
-            GameObject prefab = spawnedPrefabs[numOfImagesEachHand.ToString()];
-            if (prefab.activeSelf)
+            // press button X
+            if (IsRightActive())
             {
-                rightHoldKey = true;
-                CreateLine(prefab, 1);
+                rightButtonSwitch[0] = true;
+                rightButtonInfo[0] = "T";
             }
         }
-        if (Input.GetKey(KeyCode.Y))
+        if (Input.GetKey(KeyCode.Y) && rightButtonSwitch[0])
         {
-            // holding button X, continue drawing with right controller
-            GameObject prefab = spawnedPrefabs[numOfImagesEachHand.ToString()];
-            if (prefab.activeSelf && rightHoldKey)
+            // hold button X
+            if (IsRightActive())
             {
-                UpdateLine(prefab, 1);
+                rightButtonInfo[0] = "H";
             }
         }
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.T) || Input.GetKeyUp(KeyCode.Y))
         {
-            // release button X. This will happen earlier than GetKeyUp(KeyCode.Y)
-            rightHoldKey = false;
+            // release button X
+            if (IsRightActive())
+            {
+                rightButtonSwitch[0] = false;
+                rightButtonInfo[0] = "F";
+            }
         }
+
         if (Input.GetKeyDown(KeyCode.U))
         {
-            // button Y, remove last line drew by right controller
-            RemoveLine(1);
+            // press button Y
+            if (IsRightActive())
+            {
+                rightButtonSwitch[1] = true;
+                rightButtonInfo[1] = "T";
+            }
         }
-    }
-
-
-    void CreateLine(GameObject prefab, int num)
-    { 
-        currentLine[num] = Instantiate(linePrefab, Vector3.zero, Quaternion.identity);
-        lines[num].Add(currentLine[num]);
-        LineRenderer lineRenderer = currentLine[num].GetComponent<LineRenderer>();
-        lineRenderer.material.color = Color.blue;
-        if (num == 1)
+        if (Input.GetKey(KeyCode.U) && rightButtonSwitch[1])
         {
-            lineRenderer.material.color = Color.red;
+            // hold button Y
+            if (IsRightActive())
+            {
+                rightButtonInfo[1] = "H";
+            }
         }
-        drawPositions[num].Clear();
-        drawPositions[num].Add(prefab.transform.GetChild(0).position);
-        drawPositions[num].Add(prefab.transform.GetChild(0).position);
-        lineRenderer.SetPosition(0, drawPositions[num][0]);
-        lineRenderer.SetPosition(1, drawPositions[num][1]);
-    }
-
-    void UpdateLine(GameObject prefab, int num)
-    {
-        Vector3 newPosition = prefab.transform.GetChild(0).position;
-        drawPositions[num].Add(newPosition);
-        LineRenderer lineRenderer = currentLine[num].GetComponent<LineRenderer>();
-        lineRenderer.positionCount++;
-        lineRenderer.SetPosition(lineRenderer.positionCount-1, newPosition);
-    }
-
-    void RemoveLine(int num)
-    {
-        if (lines[num].Count > 0)
+        if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyUp(KeyCode.U))
         {
-            GameObject last = lines[num][lines[num].Count - 1];
-            Destroy(last);
-            lines[num].RemoveAt(lines[num].Count - 1);
+            // release button Y
+            if (IsRightActive())
+            {
+                rightButtonSwitch[1] = false;
+                rightButtonInfo[1] = "F";
+            }
         }
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            // press button UP
+            if (IsLeftActive())
+            {
+                leftButtonSwitch[2] = true;
+                leftButtonInfo[2] = "T";
+            }
+        }
+        if (Input.GetKey(KeyCode.W) && leftButtonSwitch[2])
+        {
+            // hold button UP
+            if (IsLeftActive())
+            {
+                leftButtonInfo[2] = "H";
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyUp(KeyCode.W))
+        {
+            // release button UP
+            if (IsLeftActive())
+            {
+                leftButtonSwitch[2] = false;
+                leftButtonInfo[2] = "F";
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            // press button DOWN
+            if (IsLeftActive())
+            {
+                leftButtonSwitch[3] = true;
+                leftButtonInfo[3] = "T";
+            }
+        }
+        if (Input.GetKey(KeyCode.X) && leftButtonSwitch[3])
+        {
+            // hold button DOWN
+            if (IsLeftActive())
+            {
+                leftButtonInfo[3] = "H";
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyUp(KeyCode.X))
+        {
+            // release button DOWN
+            if (IsLeftActive())
+            {
+                leftButtonSwitch[3] = false;
+                leftButtonInfo[3] = "F";
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            // press button LEFT
+            if (IsRightActive())
+            {
+                rightButtonSwitch[2] = true;
+                rightButtonInfo[2] = "T";
+            }
+        }
+        if (Input.GetKey(KeyCode.A) && rightButtonSwitch[2])
+        {
+            // hold button LEFT
+            if (IsRightActive())
+            {
+                rightButtonInfo[2] = "H";
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyUp(KeyCode.A))
+        {
+            // release button LEFT
+            if (IsRightActive())
+            {
+                rightButtonSwitch[2] = false;
+                rightButtonInfo[2] = "F";
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            // press button RIGHT
+            if (IsRightActive())
+            {
+                rightButtonSwitch[3] = true;
+                rightButtonInfo[3] = "T";
+            }
+        }
+        if (Input.GetKey(KeyCode.D) && rightButtonSwitch[3])
+        {
+            // hold button RIGHT
+            if (IsRightActive())
+            {
+                rightButtonInfo[3] = "H";
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyUp(KeyCode.D))
+        {
+            // release button RIGHT
+            if (IsRightActive())
+            {
+                rightButtonSwitch[3] = false;
+                rightButtonInfo[3] = "F";
+            }
+        }
+
+        // if any prefab is not visble, release all button status
+        if (!IsLeftActive())
+        {
+            for (int i = 0; i < numButtons; i++)
+            {
+                leftButtonSwitch[i] = false;
+                leftButtonInfo[i] = "F";
+            }
+        }
+        if (!IsRightActive())
+        {
+            for (int i = 0; i < numButtons; i++)
+            {
+                rightButtonSwitch[i] = false;
+                rightButtonInfo[i] = "F";
+            }
+        }
+    }
+
+    // APIs to return info to other scripts
+    // get button status on left hand
+    public string GetButtonStatesLeft()
+    {
+        string buttonStates = leftButtonInfo[0];
+        for (int i = 1; i < numButtons; i++)
+        {
+            buttonStates += leftButtonInfo[i];
+        }
+        return buttonStates;
+    }
+
+    // get button status on right hand
+    public string GetButtonStatesRight()
+    {
+        string buttonStates = rightButtonInfo[0];
+        for (int i = 1; i < numButtons; i++)
+        {
+            buttonStates += rightButtonInfo[i];
+        }
+        return buttonStates;
+    }
+
+    // return left prefab active status
+    public bool IsLeftActive()
+    {
+        return spawnedPrefabs["0"].activeSelf;
+    }
+
+    // return right prefab active status
+    public bool IsRightActive()
+    {
+        return spawnedPrefabs[numOfImagesEachHand.ToString()].activeSelf;
+    }
+
+    // return left prefab position
+    public Vector3 GetPositionLeft()
+    {
+        return spawnedPrefabs["0"].transform.position;
+    }
+
+    // return right prefab position
+    public Vector3 GetPositionRight()
+    {
+        return spawnedPrefabs[numOfImagesEachHand.ToString()].transform.position;
+    }
+
+    // return left prefab rotation in eulerAngles
+    public Vector3 GetRotationLeft()
+    {
+        return spawnedPrefabs["0"].transform.rotation.eulerAngles;
+    }
+
+    // return right prefab rotation in eulerAngles
+    public Vector3 GetRotationRight()
+    {
+        return spawnedPrefabs[numOfImagesEachHand.ToString()].transform.rotation.eulerAngles;
+    }
+
+    // return left hand position
+    public Vector3 GetPositionLeftHand()
+    {
+        return spawnedPrefabs["0"].transform.GetChild(0).position;
+    }
+
+    // return right hand position
+    public Vector3 GetPositionRightHand()
+    {
+        return spawnedPrefabs[numOfImagesEachHand.ToString()].transform.GetChild(0).position;
+    }
+
+    // return left hand rotation in eulerAngles
+    public Vector3 GetRotationLeftHand()
+    {
+        return spawnedPrefabs["0"].transform.GetChild(0).rotation.eulerAngles;
+    }
+
+    // return right hand rotation in eulerAngles
+    public Vector3 GetRotationRightHand()
+    {
+        return spawnedPrefabs[numOfImagesEachHand.ToString()].transform.GetChild(0).rotation.eulerAngles;
+    }
+
+    // get left hand color
+    public Color GetColorLeftHand()
+    {
+        return spawnedPrefabs["0"].transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color;
+    }
+
+    // get right hand color
+    public Color GetColorRightHand()
+    {
+        return spawnedPrefabs[numOfImagesEachHand.ToString()].transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color;
+    }
+
+    // get left hand scale
+    public Vector3 GetScaleLeftHand()
+    {
+        return spawnedPrefabs["0"].transform.GetChild(0).localScale;
+    }
+
+    // get right hand scale
+    public Vector3 GetScaleRightHand()
+    {
+        return spawnedPrefabs[numOfImagesEachHand.ToString()].transform.GetChild(0).localScale;
+    }
+
+    // set left hand color
+    public void SetColorLeftHand(Color color)
+    {
+        spawnedPrefabs["0"].transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color = color;
+    }
+
+    // set right hand color
+    public void SetColorRightHand(Color color)
+    {
+        spawnedPrefabs[numOfImagesEachHand.ToString()].transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color = color;
+    }
+
+    // set left hand scale
+    public void SetScaleLeftHand(Vector3 scale)
+    {
+        spawnedPrefabs["0"].transform.GetChild(0).localScale = scale;
+    }
+
+    // set right hand scale
+    public void SetScaleRightHand(Vector3 scale)
+    {
+        spawnedPrefabs[numOfImagesEachHand.ToString()].transform.GetChild(0).localScale = scale;
     }
 }

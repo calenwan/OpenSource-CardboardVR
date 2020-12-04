@@ -307,9 +307,32 @@ MonoBehaviour:
   placeablePrefabs:
   - {fileID: 552238246965888665, guid: 056113e80282d4574934fe925ba28170, type: 3}
   - {fileID: 8660958508913182626, guid: 396667f65eb574b9c8fdbd04f78b149f, type: 3}
+--- !u!114 &165585587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165585583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d98e399eea92469097e984a6ede8bea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   linePrefab: {fileID: 1427655008374452869, guid: a309e2eb482204e7093e1ce8d476a03e,
     type: 3}
-  leftHoldKey: 0
+  lineWidths:
+  - 0.01
+  - 0.02
+  - 0.03
+  - 0.04
+  - 0.05
+  colorPalette:
+  - {r: 0, g: 0, b: 0, a: 1}
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0, g: 1, b: 0, a: 1}
+  - {r: 0, g: 0, b: 1, a: 1}
+  - {r: 1, g: 1, b: 0, a: 1}
 --- !u!114 &165585590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -527,7 +550,6 @@ GameObject:
   - component: {fileID: 1114040583}
   - component: {fileID: 1114040582}
   - component: {fileID: 1114040581}
-  - component: {fileID: 1114040585}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -566,7 +588,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8de10954d04f7406e9ef977032478411, type: 2}
+  - {fileID: 2100000, guid: e66c92013cd324032b94fbe19cba557a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -609,18 +631,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1114040585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1114040580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 661cf626489f34c3799ab4d5687622a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1577749883
 GameObject:
   m_ObjectHideFlags: 0

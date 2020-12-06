@@ -11,7 +11,6 @@ public class PaintManager : MonoBehaviour
     
     private GameObject[] currentLine;
     private List<GameObject>[] lines;
-    private List<Vector3>[] drawPositions;
 
     private bool[] leftHoldKeys;
     private bool[] rightHoldKeys;
@@ -32,12 +31,10 @@ public class PaintManager : MonoBehaviour
 
         currentLine = new GameObject[numHands];
         lines = new List<GameObject>[numHands];
-        drawPositions = new List<Vector3>[numHands];
 
         for (int i = 0; i < numHands; ++i)
         {
             lines[i] = new List<GameObject>();
-            drawPositions[i] = new List<Vector3>();
         }
 
         leftHoldKeys = new bool[numButtons];
@@ -236,16 +233,12 @@ public class PaintManager : MonoBehaviour
             // right hand
             lineRenderer.widthMultiplier = lineWidths[rightWidthIdx];
         }
-        drawPositions[num].Clear();
-        drawPositions[num].Add(position);
-        drawPositions[num].Add(position);
-        lineRenderer.SetPosition(0, drawPositions[num][0]);
-        lineRenderer.SetPosition(1, drawPositions[num][1]);
+        lineRenderer.SetPosition(0, position);
+        lineRenderer.SetPosition(1, position);
     }
 
     void UpdateLine(Vector3 position, int num)
     {
-        drawPositions[num].Add(position);
         LineRenderer lineRenderer = currentLine[num].GetComponent<LineRenderer>();
         lineRenderer.positionCount++;
         lineRenderer.SetPosition(lineRenderer.positionCount - 1, position);

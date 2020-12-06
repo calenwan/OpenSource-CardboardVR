@@ -14,4 +14,4 @@ install ARCore and ARkit XR plugin
 open file and click build settings select Ios and switch platform.  
 click player setting-> select player-> provide company name  
 In resolution and presentation tab, select default orientation as Landscape left.  
-Also, in other settings, give any string to camera usage description. Also change target minimum Ios version to 12.0. Check requires ARkit support. Change Architecture to ARM 64.
+Also, in other settings, give any string to camera usage description. Also change target minimum Ios version to 12.0. Check requires ARkit support. Change Architecture to ARM 64. In XR setting tab, uncheck virtual reality supported.  

@@ -23,6 +23,9 @@ In assets-> opensource_cardboard_sdk -> cardboard ->prefabs-> drag AR session, C
 In CardboardCamera prefab -> game manager(component) -> cube length/width/height are the values of the length/width/height of handmade cube in cm.
 In CardboardCamera prefab -> game manager(component) -> continue frames is number of frames after the cube image disappear.
 
+Also remembered to press QR code button first, then scan your cardboard viewer to setup the stereo camera for your own viewer before using.
+
+
 # API methods:
  
     // get button status on left hand

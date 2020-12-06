@@ -11,7 +11,7 @@ Tracked Images: We use 12 images for our two-hand image tracking cubes. These im
 install AR Foundation    select window -> package manager -> AR Foundation 
 install ARCore and ARkit XR plugin
 
-open file and click build settings select Ios and switch platform.
-click player setting-> select player-> provide company name
-In resolution and presentation tab, select default orientation as Landscape left.
+open file and click build settings select Ios and switch platform.  
+click player setting-> select player-> provide company name  
+In resolution and presentation tab, select default orientation as Landscape left.  
 Also, in other settings, give any string to camera usage description. Also change target minimum Ios version to 12.0. Check requires ARkit support. Change Architecture to ARM 64.

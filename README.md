@@ -7,7 +7,7 @@ Use unofficial Google Cardboard SDK (mobfish GmbH) : https://github.com/mobfishg
 
 Tracked Images: We use 12 images for our two-hand image tracking cubes. These images are located inside Assets/Tracked Images. You can use your own images, but please make sure they have enough features to track.
 
-# initial set up
+# Initial set up
 install AR Foundation    select window -> package manager -> AR Foundation 
 install ARCore and ARkit XR plugin
 

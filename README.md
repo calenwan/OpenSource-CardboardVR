@@ -46,9 +46,9 @@ Please make sure that both of your hand controllers are connected to your device
 
 After you have make those preparations mentioned above, you can begin to try our system! In this repo, we provide all of our files under several folders such as Assets and Packages. You can download and copy all folders into your own Unity project. For convenience, we also provide two .unitypackage to import the necessary files into the project without copying the folders. 
 
-Demo.unitypackage is for users who want to [try our painting demo in a cubes room](https://youtu.be/2WLhy9QTawE). 
+**Demo.unitypackage** is for users who want to [try our painting demo in a cubes room](https://youtu.be/2WLhy9QTawE). 
 
-SDK.unitypackage, however, is for other developers who want to design their own projects and deploy them onto the iPhone devices with VR effects and 6 DoF using our system. We provide multiple APIs for others design their own functionalities, instead of our paiting app, to control the app with two hand cube-attached controllers. 
+**SDK.unitypackage**, however, is for other developers who want to design their own projects and deploy them onto the iPhone devices with VR effects and 6 DoF using our system. We provide multiple APIs for others design their own functionalities, instead of our paiting app, to control the app with two hand cube-attached controllers. 
 
 We will provide the instructions on how to setup the project for both user groups below.
 
@@ -111,19 +111,15 @@ Next, import the unitypackage into the Unity project. The **following section** 
 
 <p align="center"><img src="docs/openscene.jpg" width="500"></p>
 
-5. Navigate to **File > Build Settings > Add Open Scenes".
+5. Navigate to **File > Build Settings > Add Open Scenes**.
 
 <p align="center"><img src="docs/addopenscene.jpg" width="500"></p>
 
 6. Navigate to **File > Build and Run**, provide a location to save the compiled files. The XCode should open automatically after Unity finishing compiling.
 
-7. If you are new to Xcode and iOS build on iPhone devices, you need to setup your own Apple ID in order to install the app on your mobile device. Navigate to **Xcode > Preferences...**, then in **Accounts** tab, click **+** to add your Apple ID into Xcode.
+7. If you are new to Xcode and iOS build on iPhone devices, you need to setup your own Apple ID in order to install the app on your mobile device. Navigate to **Xcode > Preferences...**, then in **Accounts** tab, click **+** to add your Apple ID into Xcode. After you successfully setup your account, you should see your Apple ID info under **Accounts** tab (Personal Team).
 
-<img src="docs/preference.jpg" width="500"><img src="docs/addaccount.jpg" width="500">
-   
-   After you successfully setup your account, you should see your Apple ID info under **Accounts** tab (Personal Team).
-
-<p align="center"><img src="docs/account.jpg" width="500"></p>
+<img src="docs/preference.jpg" width="300"><img src="docs/addaccount.jpg" width="300"><img src="docs/account.jpg" width="300">
 
 8. Then, in Xcode project, navigate to **Unity-iPhone > Signing & Capabilities**, check **Automatically manage signing** and choose the Team of your own personal team. Also make sure you choose **your iOS Device** instead of Any iOS Device (arm64) at the top of the Xcode application. Then, press the Play button to install the app on your iPhone (Please make sure your phone screen is not locked).
 
@@ -177,47 +173,85 @@ That is all for how to run our painting demo based on our OpenSource Cardboard V
 <img src="docs/democode.jpg" width="500"><img src="docs/apicalling.jpg" width="500">
 
 # API methods:
-- **public string GetButtonStatesLeft()**: return button status (A,B,UP,DOWN) from the left controller as a string of four characters. Each character has the value of 'T' (press the button), 'H' (holding the button), and 'F' (release the button). For example, "HFFF" means the button A is holding, and "FTFT" means the button B and DOWN button are pressed.
-    
-- **public string GetButtonStatesRight()**: return button status (X,Y,LEFT,RIGHT) from the right controller as a string of four characters. Each character has the value of 'T' (press the button), 'H' (holding the button), and 'F' (release the button). For example, "HFFF" means the button X is holding, and "FTFT" means the button Y and RIGHT button are pressed.
-    
-- **public bool IsLeftActive()**: return true if left hand is visible (image on the left cube is visible to iPhone camera). Otherwise return false.
+- **public string GetButtonStatesLeft()**: 
 
-- **public bool IsRightActive()**: return true if right hand is visible (image on the right cube is visible to iPhone camera). Otherwise return false.
+  return button status (A,B,UP,DOWN) from the left controller as a string of four characters. Each character has the value of 'T' (press the button), 'H' (holding the button), and 'F' (release the button). For example, "HFFF" means the button A is holding, and "FTFT" means the button B and DOWN button are pressed.
+    
+- **public string GetButtonStatesRight()**: 
+
+  return button status (X,Y,LEFT,RIGHT) from the right controller as a string of four characters. Each character has the value of 'T' (press the button), 'H' (holding the button), and 'F' (release the button). For example, "HFFF" means the button X is holding, and "FTFT" means the button Y and RIGHT button are pressed.
+    
+- **public bool IsLeftActive()**: 
+
+  return true if left hand is visible (image on the left cube is visible to iPhone camera). Otherwise return false.
+
+- **public bool IsRightActive()**: 
+
+  return true if right hand is visible (image on the right cube is visible to iPhone camera). Otherwise return false.
    
-- **public Vector3 GetPositionLeft()**: return the position (Vector3) of the left arm (left parent gameobject - cylinder).
+- **public Vector3 GetPositionLeft()**: 
+
+  return the position (Vector3) of the left arm (left parent gameobject - cylinder).
     
-- **public Vector3 GetPositionRight()**: return the position (Vector3) of the right arm (right parent gameobject - cylinder).
+- **public Vector3 GetPositionRight()**: 
 
-- **public Vector3 GetRotationLeft()**: return the Angle (Vector3, Quaterion.rotation.eulerAngles) of the left arm (left parent gameobject - cylinder).
+  return the position (Vector3) of the right arm (right parent gameobject - cylinder).
 
-- **public Vector3 GetRotationRight()**: return the Angle (Vector3, Quaterion.rotation.eulerAngles) of the right arm (right parent gameobject - cylinder).
+- **public Vector3 GetRotationLeft()**: 
 
-- **public Vector3 GetPositionLeftHand()**: return the position (Vector3) of the left hand (left child gameobject - sphere).
+  return the Angle (Vector3, Quaterion.rotation.eulerAngles) of the left arm (left parent gameobject - cylinder).
+
+- **public Vector3 GetRotationRight()**: 
+
+  return the Angle (Vector3, Quaterion.rotation.eulerAngles) of the right arm (right parent gameobject - cylinder).
+
+- **public Vector3 GetPositionLeftHand()**: 
+
+  return the position (Vector3) of the left hand (left child gameobject - sphere).
     
-- **public Vector3 GetPositionRightHand()**: return the position (Vector3) of the right hand (right child gameobject - sphere).
+- **public Vector3 GetPositionRightHand()**: 
 
-- **public Vector3 GetRotationLeftHand()**: return the Angle (Vector3, Quaterion.rotation.eulerAngles) of the left hand (left child gameobject - sphere).
+  return the position (Vector3) of the right hand (right child gameobject - sphere).
 
-- **public Vector3 GetRotationRightHand()**: return the Angle (Vector3, Quaterion.rotation.eulerAngles) of the right hand (right child gameobject - sphere).   
+- **public Vector3 GetRotationLeftHand()**: 
+
+  return the Angle (Vector3, Quaterion.rotation.eulerAngles) of the left hand (left child gameobject - sphere).
+
+- **public Vector3 GetRotationRightHand()**: 
+
+  return the Angle (Vector3, Quaterion.rotation.eulerAngles) of the right hand (right child gameobject - sphere).   
     
-- **public Vector3 GetScaleLeftHand()**: return the scale (Vector3, localScale) of the left hand (left child gameobject - sphere).
+- **public Vector3 GetScaleLeftHand()**: 
+
+  return the scale (Vector3, localScale) of the left hand (left child gameobject - sphere).
     
-- **public Vector3 GetScaleRightHand()**: return the scale (Vector3, localScale) of the right hand (right child gameobject - sphere).
+- **public Vector3 GetScaleRightHand()**: 
 
-- **public Color GetColorLeftHand()**: return the color of the material on the left hand (left child gameobject - sphere).
+  return the scale (Vector3, localScale) of the right hand (right child gameobject - sphere).
 
-- **public Color GetColorRightHand()**: return the color of the material on the right hand (right child gameobject - sphere).
+- **public Color GetColorLeftHand()**: 
 
-- **public void SetScaleLeftHand(Vector3 scale)**: set the scale (Vector3, localScale) of the left hand (left child gameobject - sphere) to change the hand size.
+  return the color of the material on the left hand (left child gameobject - sphere).
+
+- **public Color GetColorRightHand()**: 
+
+  return the color of the material on the right hand (right child gameobject - sphere).
+
+- **public void SetScaleLeftHand(Vector3 scale)**: 
+  
+  set the scale (Vector3, localScale) of the left hand (left child gameobject - sphere) to change the hand size.
     
-- **public void SetScaleRightHand(Vector3 scale)**: set the scale (Vector3, localScale) of the right hand (right child gameobject - sphere) to change the hand size.
+- **public void SetScaleRightHand(Vector3 scale)**: 
 
-- **public void SetColorLeftHand(Color color)**: set the color of the material on the left hand (left child gameobject - sphere) to change the hand color.
+  set the scale (Vector3, localScale) of the right hand (right child gameobject - sphere) to change the hand size.
+
+- **public void SetColorLeftHand(Color color)**: 
+
+  set the color of the material on the left hand (left child gameobject - sphere) to change the hand color.
 
 - **public void SetColorRightHand(Color color)**: 
 
-set the color of the material on the right hand (right child gameobject - sphere) to change the hand color.
+  set the color of the material on the right hand (right child gameobject - sphere) to change the hand color.
     
 These are all APIs we provide for our system in current version. If you need more information, feel free to modify our core script, **Game Manager** under **Assets/OpenSource_Cardboard_SDK/HandController/Scripts/** to change and expand the APIs. If you want to use other type of wireless controllers, you should also need to change the **SetInputButtons()** to map your controller's signals onto the devices. Other variables may also need to change as well.
 

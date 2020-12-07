@@ -10,15 +10,19 @@ The Cardboard Viewer can be any brand, but it should at least work with your iPh
 
 <p align="center"><img src="docs/qr.jpg" width="300"></p>
 
+Moreover, you need to make sure to cut a small hole on the front of your viewer to avoid occulding the camera at the back of our iPhone.
 
-Moreover, you need to make sure to cut a small hole on the front of your viewer to avoid occulding the camera at the back of our iPhone.<img src="docs/cut.jpg" align="right" width="300">
+<p align="center"><img src="docs/cut.jpg" width="300"></p>
 
-The VR controller, however, can be any brand but need to have the **exact same type** (shape and buttons) like this.<img src="docs/controller.jpg" width="150">
+The VR controller, however, can be any brand but need to have the **exact same type** (shape and buttons) like this.
+
+<p align="center"><img src="docs/controller.jpg" width="300"></p>
 
 Since different type of controller has different button mapping to the mobile devices, our system need this exact type to work without changing the button mapping in our source codes.
 
+In addition, you need to make two hand made cubes and attach the bluetooth controllers perpendicular to one face near the bottom.
 
-In addition, you need to make two hand made cubes and attach the bluetooth controllers perpendicular to one face near the bottom.<img src="docs/cube.jpg" width="150">
+<p align="center"><img src="docs/cube.jpg" width="300"></p>
 
 The recommend dimensions of such cube is 10cm/10cm/20cm for length/width/height. The controller is attached to one of the face has length and height.
 
@@ -27,12 +31,14 @@ Next, you need to download our images under Assets/OpenSource_Cardboard_SDK/Hand
 **The order of the images are important.** Image 0 should be attached to the face with the left controller, and then follow the **clockwise order** to attach Image 1, 2, 3 on the other 3 faces. Image 4 should be attached to the top face, while image 5 to the bottom face. Similarly, you need to attach image 6-11 on the corresponding faces of the right cube. **The rotation of those images are also essential.** For example, please make sure that you don't attach the images upside down.
 
 Here is what your left cube supposed to be:
-<img src="docs/l1.jpg" width="150"><img src="docs/l2.jpg" width="150"><img src="docs/l3.jpg" width="150">
-<img src="docs/l4.jpg" width="150"><img src="docs/l5.jpg" width="150"><img src="docs/l6.jpg" width="150">
+
+<img src="docs/l1.jpg" width="300"><img src="docs/l2.jpg" width="300"><img src="docs/l3.jpg" width="300">
+<img src="docs/l4.jpg" width="300"><img src="docs/l5.jpg" width="300"><img src="docs/l6.jpg" width="300">
 
 Here is what your right cube supposed to be:
-<img src="docs/r1.jpg" width="150"><img src="docs/r2.jpg" width="150"><img src="docs/r3.jpg" width="150">
-<img src="docs/r4.jpg" width="150"><img src="docs/r5.jpg" width="150"><img src="docs/r6.jpg" width="150">
+
+<img src="docs/r1.jpg" width="300"><img src="docs/r2.jpg" width="300"><img src="docs/r3.jpg" width="300">
+<img src="docs/r4.jpg" width="300"><img src="docs/r5.jpg" width="300"><img src="docs/r6.jpg" width="300">
 
 Please make sure that both of your hand controllers are connected to your device successfully and the controllers are power on. You can put the switch on the side of the controllers to "KEY", and press any buttons such as A and B to see if the controllers can control your devices (increasing or reducing the volumn, for example). If success, please switch the side button to "GAME".
 
@@ -48,25 +54,39 @@ We will provide the instructions on how to setup the project for both user group
 
  1. Download and Install Unity Hub. Install Unity 2019.4.9f1. 
  
- 2. Under "Installs" tab, click the three dots of this version, and open "Add Modules". Please make sure if you have at least installed the "iOS Build Support".<img src="docs/modules.jpg" width="150">
+ 2. Under "Installs" tab, click the three dots of this version, and open "Add Modules". Please make sure if you have at least installed the "iOS Build Support".
  
- 3. For users, press the "NEW" button under projects table, and create a new **3D** project with any name you like. For developers, open the project you want to use our system with this Unity version. Please make sure that your existing project can work successfully in this version before adopting our system.<img src="docs/newproject.jpg" width="150">
+ <p align="center"><img src="docs/modules.jpg" width="300"></p>
  
- 4. Navigate to **Window > Package Manager**, find and install ARFoundation (version 2.1.10), AR Subsystems (version 2.1.3, installed automatically with ARFoundation), ARCore XR Plugin (version 2.1.12, not necessary on iPhone devices, but useful to expand our system to Android devices in the future) and ARKit XR Plugin (version 2.1.10).<img src="docs/arfoundation.jpg" width="150">
+ 3. For users, press the "NEW" button under projects table, and create a new **3D** project with any name you like. For developers, open the project you want to use our system with this Unity version. Please make sure that your existing project can work successfully in this version before adopting our system.
+ 
+ <p align="center"><img src="docs/newproject.jpg" width="300"></p>
+ 
+ 4. Navigate to **Window > Package Manager**, find and install ARFoundation (version 2.1.10), AR Subsystems (version 2.1.3, installed automatically with ARFoundation), ARCore XR Plugin (version 2.1.12, not necessary on iPhone devices, but useful to expand our system to Android devices in the future) and ARKit XR Plugin (version 2.1.10).
+ 
+ <p align="center"><img src="docs/arfoundation.jpg" width="300"></p>
  
 ## Configuring iOS project settings
 
  Navigate to **File > Build Settings**, 
   Select **iOS** and choose **Switch Platform**.
   
- Player Settings
-   1. change company name under "player" tab to some unique name you want.<img src="docs/company.jpg" width="150">
+### Player Settings
+   1. change company name under "player" tab to some unique name you want.
    
-   2. Navigate to **Project Settings > Player > Resolution and Presentation**. Set the **Default Orientation** to **Landscape Left**.<img src="docs/landscape.jpg" width="150">
+   <p align="center"><img src="docs/company.jpg" width="300"></p>
+   
+   2. Navigate to **Project Settings > Player > Resolution and Presentation**. Set the **Default Orientation** to **Landscape Left**.
+   
+   <p align="center"><img src="docs/landscape.jpg" width="300"></p>
  
-   3. Navigate to **Project Settings > Player > Other Settings**. In **Camera Usage Description**, write "Cardboard SDK requires camera permission to read the QR code (required to get the encoded device parameters).". In **Target minimum iOS Version**, write 12.0. Check **Requires ARKit Support**. In **Architecture**, choose ARM64.<img src="docs/other.jpg" width="150">
+   3. Navigate to **Project Settings > Player > Other Settings**. In **Camera Usage Description**, write "Cardboard SDK requires camera permission to read the QR code (required to get the encoded device parameters).". In **Target minimum iOS Version**, write 12.0. Check **Requires ARKit Support**. In **Architecture**, choose ARM64.
    
-   4. Navigate to **Project Settings > Player > XR Settings**. Make sure **Virtual Reality Supported"** is **not** checked.<img src="docs/xr.jpg" width="150">
+   <p align="center"><img src="docs/other.jpg" width="300"></p>
+   
+   4. Navigate to **Project Settings > Player > XR Settings**. Make sure **Virtual Reality Supported"** is **not** checked.
+   
+   <p align="center"><img src="docs/xr.jpg" width="300"></p>
 
 
 

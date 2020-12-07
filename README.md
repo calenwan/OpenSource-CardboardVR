@@ -9,9 +9,9 @@ In order to use our system, you need to have a compatible iPhone device (iPhone 
 The Cardboard Viewer can be any brand, but it should at least work with your iPhone's screen size and contain a QR code viewer profile at the bottom.<img src="docs/qr.jpg" width="150"> 
 
 
-Moreover, you need to make sure to cut a small hole on the front of your viewer to avoid occulde the camera at the back of our iPhone.<img src="docs/cut.jpg" width="150">
+Moreover, you need to make sure to cut a small hole on the front of your viewer to avoid occulding the camera at the back of our iPhone.<img src="docs/cut.jpg" width="150">
 
-The VR controller, however, can be any brand but need to have the exact same type (shape and buttons) like this.<img src="docs/controller.jpg" width="150">
+The VR controller, however, can be any brand but need to have the **exact same type** (shape and buttons) like this.<img src="docs/controller.jpg" width="150">
 
 Since different type of controller has different button mapping to the mobile devices, our system need this exact type to work without changing the button mapping in our source codes.
 
@@ -22,7 +22,7 @@ The recommend dimensions of such cube is 10cm/10cm/20cm for length/width/height.
 
 Next, you need to download our images under Assets/OpenSource_Cardboard_SDK/HandController/Tracked Images. Please print those 12 images with the dimension of 10cm*10cm, and attach them to the faces of both cubes at the same height. 
 
-The order of the images are important. Image 0 should be attached to the face with the left controller, and then follow the clockwise order to attach Image 1, 2, 3 on the other 3 faces. Image 4 should be attached to the top face, while image 5 to the bottom face. Similarly, you need to attach image 6-11 on the corresponding faces of the right cube. The rotation of those images are also essential. For example, please make sure that you don't attach the images upside down.
+**The order of the images are important.** Image 0 should be attached to the face with the left controller, and then follow the **clockwise order** to attach Image 1, 2, 3 on the other 3 faces. Image 4 should be attached to the top face, while image 5 to the bottom face. Similarly, you need to attach image 6-11 on the corresponding faces of the right cube. **The rotation of those images are also essential.** For example, please make sure that you don't attach the images upside down.
 
 Here is what your left cube supposed to be:
 <img src="docs/l1.jpg" width="150"><img src="docs/l2.jpg" width="150"><img src="docs/l3.jpg" width="150">
@@ -31,6 +31,12 @@ Here is what your left cube supposed to be:
 Here is what your right cube supposed to be:
 <img src="docs/r1.jpg" width="150"><img src="docs/r2.jpg" width="150"><img src="docs/r3.jpg" width="150">
 <img src="docs/r4.jpg" width="150"><img src="docs/r5.jpg" width="150"><img src="docs/r6.jpg" width="150">
+
+Please make sure that both of your hand controllers are connected to your device successfully and the controllers are power on. You can put the switch on the side of the controllers to "KEY", and press any buttons such as A and B to see if the controllers can control your devices (increasing or reducing the volumn, for example). If success, please switch the side button to "GAME".
+
+After you have make those preparations mentioned above, you can begin to try our system! In this repo, we provide all of our files under several folders such as Assets and Packages. You can download and copy all folders into your own Unity project. For convenience, we also provide two .unitypackage to import the necessary files into the project without copying the folders. Demo.unitypackage is for users who want to [try our painting demo in a cubes room](https://youtu.be/2WLhy9QTawE). SDK.unitypackage, however, is for other developers who want to design their own projects and deploy them onto the iPhone devices with VR effects and 6 DoF using our system. We provide multiple APIs for others design their own functionalities, instead of our paiting app, to control the app with two hand cube-attached controllers. We will provide the instructions on how to setup the project for both user groups below.
+
+
 
 # Initial set up
  install AR Foundation    select window -> package manager -> AR Foundation 

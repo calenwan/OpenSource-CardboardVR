@@ -88,8 +88,9 @@ We will provide the instructions on how to setup the project for both user group
    
    <p align="center"><img src="docs/xr.jpg" width="800"></p>
 
+Next, import the unitypackage into the Unity project. The **following section** is for regular users **who wants to use our painting app**. For **developers who wants to use our system in their own projects**, please **skip the next section**.
 
-
+# Instructions to install painting demo (regular users, not for developers)
 
 
 In XR setting tab, uncheck virtual reality supported.

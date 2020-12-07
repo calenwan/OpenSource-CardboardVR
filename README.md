@@ -8,7 +8,7 @@ In order to use our system, you need to have a compatible iPhone device (iPhone 
 
 The Cardboard Viewer can be any brand, but it should at least work with your iPhone's screen size and contain a QR code viewer profile at the bottom.
 
-<img src="docs/qr.jpg" align="center" width="300"> 
+<p align="center"><img src="docs/qr.jpg" width="300"></p>
 
 
 Moreover, you need to make sure to cut a small hole on the front of your viewer to avoid occulding the camera at the back of our iPhone.<img src="docs/cut.jpg" align="right" width="300">

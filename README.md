@@ -8,11 +8,13 @@ In order to use our system, you need to have a compatible iPhone device (iPhone 
 
 The Cardboard Viewer can be any brand, but it should at least work with your iPhone's screen size and contain a QR code viewer profile at the bottom.<img src="docs/qr.jpg" width="100"> 
 
+
 Moreover, you need to make sure to cut a small hole on the front of your viewer to avoid occulde the camera at the back of our iPhone.<img src="docs/cut.jpg" width="100">
 
 The VR controller, however, can be any brand but need to have the exact same type (shape and buttons) like this.<img src="docs/controller.jpg" width="100">
 
 Since different type of controller has different button mapping to the mobile devices, our system need this exact type to work without changing the button mapping in our source codes.
+
 
 In addition, you need to make two hand made cubes and attach the bluetooth controllers perpendicular to one face near the bottom.<img src="docs/cube.jpg" width="100">
 

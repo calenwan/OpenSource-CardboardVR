@@ -42,16 +42,34 @@ SDK.unitypackage, however, is for other developers who want to design their own 
 
 We will provide the instructions on how to setup the project for both user groups below.
 
+# Instructions
+
+ 1. Download and Install Unity Hub. Install Unity 2019.4.9f1. 
+ 
+ 2. Under "Installs" tab, click the three dots of this version, and open "Add Modules". Please make sure if you have at least installed the "iOS Build Support".<img src="docs/modules.jpg" width="150">
+ 
+ 3. For users, press the "NEW" button under projects table, and create a new **3D** project with any name you like. For developers, open the project you want to use our system with this Unity version. Please make sure that your existing project can work successfully in this version before adopting our system.<img src="docs/newproject.jpg" width="150">
+ 
+ 4. Navigate to **Window > Package Manager**, find and install ARFoundation (version 2.1.10), AR Subsystems (version 2.1.3, installed automatically with ARFoundation), ARCore XR Plugin (version 2.1.12, not necessary on iPhone devices, but useful to expand our system to Android devices in the future) and ARKit XR Plugin (version 2.1.10).<img src="docs/arfoundation.jpg" width="150">
+ 
+## Configuring iOS project settings
+
+ Navigate to **File > Build Settings**, 
+  Select **iOS** and choose **Switch Platform**.
+  
+ Player Settings
+   1. change company name under "player" tab to some unique name you want.<img src="docs/company.jpg" width="150">
+   
+   2. Navigate to **Project Settings > Player > Resolution and Presentation**. Set the **Default Orientation** to **Landscape Left**.<img src="docs/landscape.jpg" width="150">
+ 
+   3. Navigate to **Project Settings > Player > Other Settings**. In **Camera Usage Description**, write "Cardboard SDK requires camera permission to read the QR code (required to get the encoded device parameters).". In **Target minimum iOS Version**, write 12.0. Check **Requires ARKit Support**. In **Architecture**, choose ARM64.<img src="docs/other.jpg" width="150">
+   
+   4. Navigate to **Project Settings > Player > XR Settings**. Make sure **Virtual Reality Supported"** is **not** checked.<img src="docs/xr.jpg" width="150">
 
 
-# Initial set up
- install AR Foundation    select window -> package manager -> AR Foundation 
- install ARCore and ARkit XR plugin
 
-open file and click build settings select Ios and switch platform.  
-click player setting-> select player-> provide company name  
-In resolution and presentation tab, select default orientation as Landscape left.  
-Also, in other settings, give any string to camera usage description. Also change target minimum Ios version to 12.0. Check requires ARkit support. Change Architecture to ARM 64. 
+
+
 In XR setting tab, uncheck virtual reality supported.
 Import unity package.
 In assets-> opensource_cardboard_sdk -> cardboard ->prefabs-> drag AR session, CardboardCamera, CardboardUIOverlay, EventSystem into your scene hierachy.

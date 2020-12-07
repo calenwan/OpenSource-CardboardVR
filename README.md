@@ -35,8 +35,11 @@ Here is what your right cube supposed to be:
 Please make sure that both of your hand controllers are connected to your device successfully and the controllers are power on. You can put the switch on the side of the controllers to "KEY", and press any buttons such as A and B to see if the controllers can control your devices (increasing or reducing the volumn, for example). If success, please switch the side button to "GAME".
 
 After you have make those preparations mentioned above, you can begin to try our system! In this repo, we provide all of our files under several folders such as Assets and Packages. You can download and copy all folders into your own Unity project. For convenience, we also provide two .unitypackage to import the necessary files into the project without copying the folders. 
+
 Demo.unitypackage is for users who want to [try our painting demo in a cubes room](https://youtu.be/2WLhy9QTawE). 
+
 SDK.unitypackage, however, is for other developers who want to design their own projects and deploy them onto the iPhone devices with VR effects and 6 DoF using our system. We provide multiple APIs for others design their own functionalities, instead of our paiting app, to control the app with two hand cube-attached controllers. 
+
 We will provide the instructions on how to setup the project for both user groups below.
 
 

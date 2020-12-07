@@ -1,6 +1,6 @@
 # Opensource Cardboard VR system for iPhone devices
 
-Copyright 2020 "VR substitutor" Team.
+Copyright 2020 "VR substitutor" Team (Kailun Wan, Yanda Li, Yizhou Wang).
 
 This is an opensource cardboard VR system project in Unity, implemented from [mobfish Cardboard Unity SDK](https://github.com/mobfishgmbh/Cardboard-VR-Unity-SDK). It is built on Unity 2019.4.9f1, with the ARFoudnation 2.1.10, AR Subsystems 2.1.3, ARCore XR Plugin 2.1.12 and ARKit XR Plugin 2.1.10. This project works on iPhone devices which support of AR technology only.
 
@@ -222,8 +222,8 @@ The fourth paramenter, **Continue Frames**, is to represent how many frames to r
     
 These are all APIs we provide for our system in current version. If you need more information, feel free to modify our core script, **Game Manager** under **Assets/OpenSource_Cardboard_SDK/HandController/Scripts/** to change and expand the APIs. If you want to use other type of wireless controllers, you should also need to change the **SetInputButtons()** to map your controller's signals onto the devices. Other variables may also need to change as well.
 
-<p align="center"><img src="docs/democode.jpg" width="800"></p>
-<p align="center"><img src="docs/apicalling.jpg" width="800"></p>
+<p align="center"><img src="docs/apis.jpg" width="800"></p>
+<p align="center"><img src="docs/buttonmapping.jpg" width="800"></p>
 
 # Remarks
 Thank you for using our OpenSource Cardboard VR system. We hope you have an enjoyable time while using it. Welcome anyone's contribution to make it more robust and broad of use. Feel free to make tickets if there is any bugs, and do Pull Requests if you have some suggestions for feature or bug fix.
@@ -253,5 +253,3 @@ Yizhou Wang
 [Bjoern Hartmann](http://people.eecs.berkeley.edu/~bjoern/)
 
 We thank you for your contributions and ideas to this project.
-
-We thank

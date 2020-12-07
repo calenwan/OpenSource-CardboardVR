@@ -1,5 +1,6 @@
-# OpenSource-CardboardVR
-This is the repo for final project OpenSource CardboardVR using Unity and ARFoundation
+# Opensource Cardboard VR system for iPhone devices
+
+This is an opensource cardboard VR system in Unity, implemented from [mobfish Cardboard Unity SDK](https://github.com/mobfishgmbh/Cardboard-VR-Unity-SDK)
 
 Citation:
 

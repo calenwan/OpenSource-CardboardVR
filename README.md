@@ -64,7 +64,7 @@ We will provide the instructions on how to setup the project for both user group
  
  4. Navigate to **Window > Package Manager**, find and install ARFoundation (version 2.1.10), AR Subsystems (version 2.1.3, installed automatically with ARFoundation), ARCore XR Plugin (version 2.1.12, not necessary on iPhone devices, but useful to expand our system to Android devices in the future) and ARKit XR Plugin (version 2.1.10).
  
- <p align="center"><img src="docs/arfoundation.jpg" width="300"></p>
+ <p align="center"><img src="docs/arfoundation.jpg" width="500"></p>
  
 ## Configuring iOS project settings
 

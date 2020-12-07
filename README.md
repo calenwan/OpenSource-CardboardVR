@@ -262,12 +262,15 @@ Thank you for using our OpenSource Cardboard VR system. We hope you have an enjo
 
 # License
 mobfish Unity Cardboard SDK License:
+
 https://github.com/mobfishgmbh/Cardboard-VR-Unity-SDK/blob/master/LICENSE.md
 
 Official Google Cardboard SDK License:
+
 https://github.com/googlevr/cardboard/blob/master/LICENSE
 
 Protocol Buffer License:
+
 https://github.com/protocolbuffers/protobuf/blob/master/LICENSE
 
 The "Google Cardboard" name is a trademark owned by Google and is not included within the assets licensed under the Apache License 2.0.

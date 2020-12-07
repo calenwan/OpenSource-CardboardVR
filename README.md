@@ -56,11 +56,11 @@ We will provide the instructions on how to setup the project for both user group
  
  2. Under "Installs" tab, click the three dots of this version, and open "Add Modules". Please make sure if you have at least installed the "iOS Build Support".
  
- <p align="center"><img src="docs/modules.jpg" width="300"></p>
+ <p align="center"><img src="docs/modules.jpg" width="800"></p>
  
  3. For users, press the "NEW" button under projects table, and create a new **3D** project with any name you like. For developers, open the project you want to use our system with this Unity version. Please make sure that your existing project can work successfully in this version before adopting our system.
  
- <p align="center"><img src="docs/newproject.jpg" width="300"></p>
+ <p align="center"><img src="docs/newproject.jpg" width="800"></p>
  
  4. Navigate to **Window > Package Manager**, find and install ARFoundation (version 2.1.10), AR Subsystems (version 2.1.3, installed automatically with ARFoundation), ARCore XR Plugin (version 2.1.12, not necessary on iPhone devices, but useful to expand our system to Android devices in the future) and ARKit XR Plugin (version 2.1.10).
  
@@ -74,19 +74,19 @@ We will provide the instructions on how to setup the project for both user group
 ### Player Settings
    1. change company name under "player" tab to some unique name you want.
    
-   <p align="center"><img src="docs/company.jpg" width="300"></p>
+   <p align="center"><img src="docs/company.jpg" width="800"></p>
    
    2. Navigate to **Project Settings > Player > Resolution and Presentation**. Set the **Default Orientation** to **Landscape Left**.
    
-   <p align="center"><img src="docs/landscape.jpg" width="300"></p>
+   <p align="center"><img src="docs/landscape.jpg" width="800"></p>
  
    3. Navigate to **Project Settings > Player > Other Settings**. In **Camera Usage Description**, write "Cardboard SDK requires camera permission to read the QR code (required to get the encoded device parameters).". In **Target minimum iOS Version**, write 12.0. Check **Requires ARKit Support**. In **Architecture**, choose ARM64.
    
-   <p align="center"><img src="docs/other.jpg" width="300"></p>
+   <p align="center"><img src="docs/other.jpg" width="800"></p>
    
    4. Navigate to **Project Settings > Player > XR Settings**. Make sure **Virtual Reality Supported"** is **not** checked.
    
-   <p align="center"><img src="docs/xr.jpg" width="300"></p>
+   <p align="center"><img src="docs/xr.jpg" width="800"></p>
 
 
 

@@ -22,15 +22,15 @@ The recommend dimensions of such cube is 10cm/10cm/20cm for length/width/height.
 
 Next, you need to download our images under Assets/OpenSource_Cardboard_SDK/HandController/Tracked Images. Please print those 12 images with the dimension of 10cm*10cm, and attach them to the faces of both cubes at the same height. 
 
-The order of the images are important. Image 0 should be attached to the face with the left controller, and then follow the clockwise order to attach Image 1, 2, 3 on the other 3 faces. Image 4 should be attached to the top face, while image 5 to the bottom face. Similarly, you need to attach image 6-11 on the faces of the right cube. The rotation of those images are also essential. For example, please make sure that you don't attach the images upside down.
+The order of the images are important. Image 0 should be attached to the face with the left controller, and then follow the clockwise order to attach Image 1, 2, 3 on the other 3 faces. Image 4 should be attached to the top face, while image 5 to the bottom face. Similarly, you need to attach image 6-11 on the corresponding faces of the right cube. The rotation of those images are also essential. For example, please make sure that you don't attach the images upside down.
 
 Here is what your left cube supposed to be:
-<img src="docs/l1.jpg" width="100"><img src="docs/l2.jpg" width="100"><img src="docs/l3.jpg" width="100"><img src="docs/l4.jpg" width="100"><img src="docs/l5.jpg" width="100"><img src="docs/l6.jpg" width="100">
+<img src="docs/l1.jpg" width="150"><img src="docs/l2.jpg" width="150"><img src="docs/l3.jpg" width="150">
+<img src="docs/l4.jpg" width="150"><img src="docs/l5.jpg" width="150"><img src="docs/l6.jpg" width="150">
 
-And Here is what your right cube supposed to be:
-<img src="docs/r1.jpg" width="100"><img src="docs/r2.jpg" width="100"><img src="docs/r3.jpg" width="100"><img src="docs/r4.jpg" width="100"><img src="docs/r5.jpg" width="100"><img src="docs/r6.jpg" width="100">
-
-Tracked Images: We use 12 images for our two-hand image tracking cubes. These images are located inside Assets/Tracked Images. You can use your own images, but please make sure they have enough features to track.
+Here is what your right cube supposed to be:
+<img src="docs/r1.jpg" width="150"><img src="docs/r2.jpg" width="150"><img src="docs/r3.jpg" width="150">
+<img src="docs/r4.jpg" width="150"><img src="docs/r5.jpg" width="150"><img src="docs/r6.jpg" width="150">
 
 # Initial set up
  install AR Foundation    select window -> package manager -> AR Foundation 

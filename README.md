@@ -71,6 +71,7 @@ We will provide the instructions on how to setup the project for both user group
 Navigate to **File > Build Settings**, select **iOS** and choose **Switch Platform**.
   
 ### Player Settings
+
 1. change company name under "player" tab to some unique name you want.
    
 <p align="center"><img src="docs/company.jpg" width="800"></p>
@@ -87,10 +88,81 @@ Navigate to **File > Build Settings**, select **iOS** and choose **Switch Platfo
    
 <p align="center"><img src="docs/xr.jpg" width="800"></p>
 
-Next, import the unitypackage into the Unity project. The **following section** is for regular users **who wants to use our painting app**. For **developers who wants to use our system in their own projects**, please **skip the next section**.
+
+Next, import the unitypackage into the Unity project. The **following section** is for regular users **who wants to use our painting app**. For **developers who wants to use our system in their own projects**, please **skip the next section**. However, if you are **not familar with iOS building with XCode** in Unity, please **consult the following demo section** for more info.
 
 # Instructions to install painting demo (regular users, not for developers)
 
+1. Delete **Scene** folder under **Assets**.
+
+<p align="center"><img src="docs/deletescene.jpg" width="800"></p>
+
+2. Navigate to **Assets > Import Package > Custom Package..."**, and then choose the downloaded **Demo.unitypackage**.
+
+<p align="center"><img src="docs/import.jpg" width="800"></p>
+
+3. Import all files into the project.
+
+<p align="center"><img src="docs/import2.jpg" width="800"></p>
+
+4. Double click **HelloCardboard** under **Assets/demo/Scenes** to open the demo scene.
+
+<p align="center"><img src="docs/openscene.jpg" width="800"></p>
+
+5. Navigate to **File > Build Settings > Add Open Scenes".
+
+<p align="center"><img src="docs/addopenscene.jpg" width="800"></p>
+
+6. Navigate to **File > Build and Run**, provide a location to save the compiled files. The XCode should open automatically after Unity finishing compiling.
+
+7. If you are new to Xcode and iOS build on iPhone devices, you need to setup your own Apple ID in order to install the app on your mobile device. Navigate to **Xcode > Preferences...**, then in **Accounts** tab, click **+** to add your Apple ID into Xcode.
+
+<p align="center"><img src="docs/preference.jpg" width="800"></p>
+<p align="center"><img src="docs/addacount.jpg" width="800"></p>
+After you successfully setup your account, you should see your Apple ID info under **Accounts** tab (Personal Team).
+
+<p align="center"><img src="docs/account.jpg" width="800"></p>
+
+8. Then, in Xcode project, navigate to **Unity-iPhone > Signing & Capabilities**, check **Automatically manage signing** and choose the Team of your own personal team. Also make sure you choose **your iOS Device** instead of Any iOS Device (arm64) at the top of the Xcode application. Then, press the Play button to install the app on your iPhone (Please make sure your phone screen is not locked).
+
+<p align="center"><img src="docs/xcode.jpg" width="800"></p>
+
+9. You may encounter the **Could Not Launch** error during installation. If occurs, navigate to **Settings > General > Device Management > Apple Development: ... on your iPhone**, and **Trust** the developer account. Then, you can click the **Play** button in Xcode to rerun the app.
+
+<p align="center"><img src="docs/xcodeerror.jpg" width="800"></p>
+
+10. If the app is working properly, you can press the **Stop** button in Xcode, unconnect your iPhone from MacBook, and use it on iPhone as a normal app.
+
+To begin playing the app in a specific Cardboard viewer, press the QR button first after the app is open. It then need to detect the viewer profile of your cardboard viewer. Then, the stereo VR effects will automatically adjust to the size for this viewer. If you change the viewer, repeat this process to readjust the VR screen effects.
+
+<p align="center"><img src="docs/beforeqr.jpg" width="800"></p>
+<p align="center"><img src="docs/inqr.jpg" width="800"></p>
+<p align="center"><img src="docs/afterqr.jpg" width="800"></p>
+
+
+For our painting app, when a hand controller is seen by the camera (camera sees any image on the cube):
+- press and hold button A on the left controller, or button X on the right controller to draw a line with the movement of your hand;
+- press button B on left or button Y on right to undo previous drawings until all drawings are removed;
+- press button UP on left or button LEFT on right to change pen size;
+- press button DOWN on left or button RIGHT on right to change pen color;
+
+That is all for how to run our painting demo based on our OpenSource Cardboard VR system. If you are an ordinary user and just want to try our painting app, you can stop here. Otherwise, if you are a App developer, and want to develop your own app using our system, please continue reading as we give instructions on how to import our SDK into your existing project. We will also provide some APIs to get the button information and the hand controller positions for you to design your own functionalities and scripts.
+
+# Instructions to use SDK in existing projects (for developers)
+
+1. Navigate to **Assets > Import Package > Custom Package..."**, and then choose the downloaded **SDK.unitypackage**.
+
+<p align="center"><img src="docs/import.jpg" width="800"></p>
+
+2. Import all files into the project.
+
+<p align="center"><img src="docs/import2.jpg" width="800"></p>
+
+3. Navigate to **Assets/OpenSource_Cardboard_SDK/Cardboard/Prefabs/**, drag all four prefabs into **Hierarchy**. Place these prefabs at the same location of your original camera, If you ever modified your own camera before from the default **Main Camera** from the new empty Unity project (such as adding extra components or scripts), please also them on to **CardboardCamera** gameobject you dragged into the Hierarchy. In short, replace your own camera with **CardboardCamera** without affecting the camera's functionality.
+
+<p align="center"><img src="docs/dragging.jpg" width="800"></p>
+
+4. 
 
 In XR setting tab, uncheck virtual reality supported.
 Import unity package.

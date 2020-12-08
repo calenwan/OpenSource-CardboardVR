@@ -34,13 +34,11 @@ Next, you need to download our images under **Assets/OpenSource_Cardboard_SDK/Ha
 
 Here is what your left cube supposed to be:
 
-<p align="center"><img src="docs/l1.jpg" width="300"><img src="docs/l2.jpg" width="300"><img src="docs/l3.jpg" width="300"></p>
-<p align="center"><img src="docs/l4.jpg" width="300"><img src="docs/l5.jpg" width="300"><img src="docs/l6.jpg" width="300"></p>
+<p align="center"><img src="docs/l1.jpg" width="300"><img src="docs/l2.jpg" width="300"><img src="docs/l3.jpg" width="300"><img src="docs/l4.jpg" width="300"><img src="docs/l5.jpg" width="300"><img src="docs/l6.jpg" width="300"></p>
 
 Here is what your right cube supposed to be:
 
-<p align="center"><img src="docs/r1.jpg" width="300"><img src="docs/r2.jpg" width="300"><img src="docs/r3.jpg" width="300"></p>
-<p align="center"><img src="docs/r4.jpg" width="300"><img src="docs/r5.jpg" width="300"><img src="docs/r6.jpg" width="300"></p>
+<p align="center"><img src="docs/r1.jpg" width="300"><img src="docs/r2.jpg" width="300"><img src="docs/r3.jpg" width="300"><img src="docs/r4.jpg" width="300"><img src="docs/r5.jpg" width="300"><img src="docs/r6.jpg" width="300"></p>
 
 Please make sure that both of your hand controllers are connected to your device successfully and the controllers are power on. You can put the switch on the side of the controllers to "KEY", and press any buttons such as A and B to see if the controllers can control your devices (increasing or reducing the volumn, for example). If success, please switch the side button to "GAME".
 

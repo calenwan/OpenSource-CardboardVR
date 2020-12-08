@@ -119,7 +119,7 @@ Next, import the unitypackage into the Unity project. The **following section** 
 
 7. If you are new to Xcode and iOS build on iPhone devices, you need to setup your own Apple ID in order to install the app on your mobile device. Navigate to **Xcode > Preferences...**, then in **Accounts** tab, click **+** to add your Apple ID into Xcode. After you successfully setup your account, you should see your Apple ID info under **Accounts** tab (Personal Team).
 
-<img src="docs/preference.jpg" width="300"><img src="docs/addaccount.jpg" width="300"><img src="docs/account.jpg" width="300">
+<p align="center"><img src="docs/preference.jpg" width="300"><img src="docs/addaccount.jpg" width="300"><img src="docs/account.jpg" width="300"></p>
 
 8. Then, in Xcode project, navigate to **Unity-iPhone > Signing & Capabilities**, check **Automatically manage signing** and choose the Team of your own personal team. Also make sure you choose **your iOS Device** instead of Any iOS Device (arm64) at the top of the Xcode application. Then, press the Play button to install the app on your iPhone (Please make sure your phone screen is not locked).
 
@@ -133,7 +133,7 @@ Next, import the unitypackage into the Unity project. The **following section** 
 
 To begin playing the app in a specific Cardboard viewer, press the QR button first after the app is open. It then need to detect the viewer profile of your cardboard viewer. Then, the stereo VR effects will automatically adjust to the size for this viewer. If you change the viewer, repeat this process to readjust the VR screen effects.
 
-<p align="center"><img src="docs/beforeqr.jpg" width="300"><img src="docs/inqr.jpg" width="300"><img src="docs/afterqr.jpg" width="300">
+<p align="center"><img src="docs/beforeqr.jpg" width="300"><img src="docs/inqr.jpg" width="300"><img src="docs/afterqr.jpg" width="300"></p>
 
 
 For our painting app, when a hand controller is seen by the camera (camera sees any image on the cube):
@@ -170,7 +170,7 @@ That is all for how to run our painting demo based on our OpenSource Cardboard V
 
 6. Then, you can write your own scripts to achieve some functionalites of your app. Please make sure to add **GameManager** variables in your script in order to call our APIs in **Game Manager**. The calling method varies due to which gameobject you attach your own scripts to. For example, if you attach your own script onto **CardboardCamera**, which has the **Game Manager** script component, you can get set the variable in the image below, and call any APIs you want for controller button and position information. The details returned from our APIs are placed at the end of this instruction. You can then develop your own app using our OpenSource Cardboard VR system!
 
-<img src="docs/democode.jpg" width="500"><img src="docs/apicalling.jpg" width="500">
+<p align="center"><img src="docs/democode.jpg" width="500"><img src="docs/apicalling.jpg" width="500"></p>
 
 # API methods:
 - **public string GetButtonStatesLeft()**: 
@@ -255,7 +255,7 @@ That is all for how to run our painting demo based on our OpenSource Cardboard V
     
 These are all APIs we provide for our system in current version. If you need more information, feel free to modify our core script, **Game Manager** under **Assets/OpenSource_Cardboard_SDK/HandController/Scripts/** to change and expand the APIs. If you want to use other type of wireless controllers, you should also need to change the **SetInputButtons()** to map your controller's signals onto the devices. Other variables may also need to change as well.
 
-<img src="docs/apis.jpg" width="500"><img src="docs/buttonmapping.jpg" width="500">
+<p align="center"><img src="docs/apis.jpg" width="500"><img src="docs/buttonmapping.jpg" width="500"></p>
 
 # Remarks
 Thank you for using our OpenSource Cardboard VR system. We hope you have an enjoyable time while using it. Welcome anyone's contribution to make it more robust and broad of use. Feel free to make tickets if there is any bugs, and do Pull Requests if you have some suggestions for feature or bug fix.
@@ -277,9 +277,9 @@ The "Google Cardboard" name is a trademark owned by Google and is not included w
 
 # Special Thanks
 
-Kailun Wan
+[Kailun Wan](https://www.linkedin.com/in/kailun-kevin-wan-68789670/)
 
-Yanda Li
+[Yanda Li](https://www.linkedin.com/in/yanda-li-695879190/)
 
 Yizhou Wang
 

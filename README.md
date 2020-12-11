@@ -279,7 +279,7 @@ The "Google Cardboard" name is a trademark owned by Google and is not included w
 
 [Yanda Li](https://www.linkedin.com/in/yanda-li-695879190/)
 
-Yizhou Wang
+[Yizhou Wang](https://github.com/HyperbolaZz)
 
 [Bala Kumaravel](https://www.tkbala.com/)
 
